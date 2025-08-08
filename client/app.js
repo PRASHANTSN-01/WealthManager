@@ -55,7 +55,7 @@ class UIController {
         document.getElementById('totalGainLoss').textContent = formatCurrency(summary.totalGainLoss);
         document.getElementById('totalGainLossPercent').textContent = formatPercentage(summary.totalGainLossPercent);
         document.getElementById('performance').textContent = formatPercentage(summary.totalGainLossPercent);
-        document.getElementById('holdingsCount').textContent = portfolioData.holdings.length;
+        document.getElementById('holdingsCount').textContent = window.portfolioData.holdings.length;
     }
 
     static renderHoldingsTable(holdings) {
