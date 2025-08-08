@@ -4,10 +4,14 @@
   "description": "Portfolio Analytics Dashboard Frontend",
   "main": "index.html",
   "scripts": {
-    "start": "serve -s . -l 3000",
-    "build": "echo 'Build complete'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
   },
   "dependencies": {
-    "serve": "^14.2.0"
+    "wealthmanager-portfolio-dashboard": "file:.."
   }
 }
