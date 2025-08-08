@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthManager - Portfolio Analytics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>WealthManager.online</h1>
+            <p>Portfolio Analytics Dashboard</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Portfolio Overview Cards -->
+            <section class="overview-section">
+                <h2>Portfolio Overview</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Total Portfolio Value</h3>
+                        <p class="value" id="totalValue">₹0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Gain/Loss</h3>
+                        <p class="value" id="totalGainLoss">₹0</p>
+                        <p class="percentage" id="totalGainLossPercent">0%</p>
+                    </div>
+                    <div class="card">
+                        <h3>Portfolio Performance</h3>
+                        <p class="value" id="performance">0%</p>
+                    </div>
+                    <div class="card">
+                        <h3>Number of Holdings</h3>
+                        <p class="value" id="holdingsCount">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Asset Allocation -->
+            <section class="allocation-section">
+                <h2>Asset Allocation</h2>
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Sector Distribution</h3>
+                        <canvas id="sectorChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Market Cap Distribution</h3>
+                        <canvas id="marketCapChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Performance Chart -->
+            <section class="performance-section">
+                <h2>Performance Comparison</h2>
+                <div class="chart-card">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Holdings Table -->
+            <section class="holdings-section">
+                <h2>Portfolio Holdings</h2>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search by symbol, name, or sector..." class="search-input">
+                    <button id="clearSearch" class="clear-btn">Clear</button>
+                </div>
+                <div class="table-container">
+                    <table id="holdingsTable">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Avg Price</th>
+                                <th>Current Price</th>
+                                <th>Value</th>
+                                <th>Gain/Loss</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="holdingsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="noResults" class="no-results" style="display: none;">
+                    <p>No holdings found matching your search.</p>
+                </div>
+            </section>
+
+            <!-- Top Performers -->
+            <section class="performers-section">
+                <h2>Top Performers</h2>
+                <div class="performers-grid">
+                    <div class="performer-card">
+                        <h3>Best Performer</h3>
+                        <p id="bestPerformer">-</p>
+                    </div>
+                    <div class="performer-card">
+                        <h3>Worst Performer</h3>
+                        <p id="worstPerformer">-</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "wealthmanager-client",
+  "version": "1.0.0",
+  "description": "Portfolio Analytics Dashboard Frontend",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s . -l 3000",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
