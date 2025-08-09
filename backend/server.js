@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Import portfolio data
-const portfolioData = require('./backend/data/sampleData');
+const portfolioData = require('./data/sampleData');
 
 // API Routes
 app.get('/api/portfolio/holdings', (req, res) => {
@@ -50,9 +50,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-const path = require('path');
-
-// Serve static files from client/build
+// Serve static files from React build folder
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Handle frontend routes
