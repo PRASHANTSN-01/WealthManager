@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: wealthmanager-backend
+    env: node
+    region: oregon
+    branch: blackboxai/portfolio-dashboard
+    buildCommand: "cd backend && npm install"
+    startCommand: "node backend/server.js"
+    autoDeploy: true
+    plan: free
+
+  - type: static
+    name: wealthmanager-frontend
+    env: static
+    region: oregon
+    branch: blackboxai/portfolio-dashboard
+    buildCommand: "cd client && npm install && npm run build"
+    staticPublishPath: "client/build"
+    autoDeploy: true
+    plan: free

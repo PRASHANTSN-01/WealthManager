@@ -1,3 +1,16 @@
 {
-  "outputDirectory": "client/dist"
+  "version": 2,
+  "outputDirectory": "client/build",
+  "buildCommand": "cd client && npm install && npm run build",
+  "installCommand": "npm install && cd client && npm install",
+  "routes": [
+    {
+      "src": "/api/portfolio/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/client/build/$1"
+    }
+  ]
 }
