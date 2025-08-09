@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "outputDirectory": "client/dist",
+  "outputDirectory": "client/build",
   "buildCommand": "cd client && npm install && npm run build",
   "installCommand": "npm install && cd client && npm install",
   "routes": [
@@ -10,7 +10,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "dest": "/client/build/$1"
     }
   ]
 }

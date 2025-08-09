@@ -1,5 +1,5 @@
-// API Configuration - Updated to use Render URL
-const API_BASE_URL = 'https://wealthmanager-d6ve.onrender.com/api/portfolio';
+// API Configuration - Use local backend URL for development
+const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:3001/api/portfolio' : 'https://wealthmanager-d6ve.onrender.com/api/portfolio';
 
 // Chart instances
 let sectorChart, marketCapChart, performanceChart;
