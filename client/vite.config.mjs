@@ -1,17 +1,14 @@
 import { defineConfig } from 'vite'
-import { resolve } from 'path'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  plugins: [react()],
   build: {
-    outDir: 'dist',
-    emptyOutDir: true,
+    outDir: 'build',  // Make sure this is 'build'
+    emptyOutDir: true // Clean the folder before build
   },
   server: {
     port: 3000,
-  },
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, '.'),
-    },
+    open: true,
   },
 })
