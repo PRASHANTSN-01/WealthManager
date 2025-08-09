@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Import portfolio data
 // Choose the correct path based on your folder structure; update if needed
-const portfolioData = require('./data/sampleData');
+const portfolioData = require('./backend/data/sampleData');
 
 // API Routes
 app.get('/api/portfolio/holdings', (req, res) => {
@@ -69,3 +69,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`API endpoints available at: http://localhost:${PORT}/api/portfolio/*`);
 });
+
