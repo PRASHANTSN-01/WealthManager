@@ -50,12 +50,14 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Serve static files from client/build
-app.use(express.static(path.join(__dirname, 'client/build')));
+const path = require('path');
 
-// Handle client routes
+// Serve static files from frontend/build
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Handle frontend routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
 // Handle 404 for API routes
