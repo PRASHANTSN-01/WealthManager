@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'http://localhost:5000/api/portfolio';
+const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000/api/portfolio' : '/api/portfolio';
 
 // Chart instances
 let sectorChart, marketCapChart, performanceChart;
@@ -238,6 +238,19 @@ class App {
             console.error('Failed to initialize app:', error);
             this.showError('Failed to load portfolio data. Please refresh the page.');
         }
+    }
+
+    static showError(message) {
+        let errorDiv = document.getElementById('errorDiv');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = 'errorDiv';
+            errorDiv.style.color = 'red';
+            errorDiv.style.fontWeight = 'bold';
+            errorDiv.style.margin = '10px';
+            document.body.insertBefore(errorDiv, document.body.firstChild);
+        }
+        errorDiv.textContent = message;
     }
 
     static async loadAllData() {
