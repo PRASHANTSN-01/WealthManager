@@ -1,10 +1,6 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "outputDirectory": "client/build",
-=======
-  "outputDirectory": "client/dist",
->>>>>>> 6ee44f2 (Resolve vite.config.mjs conflicts)
   "buildCommand": "cd client && npm install && npm run build",
   "installCommand": "npm install && cd client && npm install",
   "routes": [
@@ -14,11 +10,7 @@
     },
     {
       "src": "/(.*)",
-<<<<<<< HEAD
       "dest": "/client/build/$1"
-=======
-      "dest": "/client/dist/$1"
->>>>>>> 6ee44f2 (Resolve vite.config.mjs conflicts)
     }
   ]
 }
