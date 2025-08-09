@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Import portfolio data
-const portfolioData = require('./data/sampleData');
+const portfolioData = require('./backend/data/sampleData');
 
 // API Routes
 app.get('/api/portfolio/holdings', (req, res) => {
