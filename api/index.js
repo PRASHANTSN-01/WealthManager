@@ -3,18 +3,13 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3001; // Changed from 5000 to 3001 to avoid port conflict
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Import portfolio data
-<<<<<<< HEAD
-const portfolioData = require('./backend/data/sampleData');
-=======
-const portfolioData = require('./data/sampleData');
->>>>>>> 6ee44f2 (Resolve vite.config.mjs conflicts)
+const portfolioData = require('../data/sampleData');
 
 // API Routes
 app.get('/api/portfolio/holdings', (req, res) => {
@@ -54,28 +49,10 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-<<<<<<< HEAD
-// Serve static files from frontend/build
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Handle frontend routes
-=======
-// Serve static files from client/build
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Handle client routes
->>>>>>> 6ee44f2 (Resolve vite.config.mjs conflicts)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'));
-});
-
 // Handle 404 for API routes
 app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API endpoint not found' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`API endpoints available at: http://localhost:${PORT}/api/portfolio/*`);
-});
+// Export for Vercel
+module.exports = app;
