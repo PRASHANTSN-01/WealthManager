@@ -1,5 +1,5 @@
-// API Configuration
-const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000/api/portfolio' : '/api/portfolio';
+// API Configuration - Updated to use Render URL
+const API_BASE_URL = 'https://wealthmanager-d6ve.onrender.com/api/portfolio';
 
 // Chart instances
 let sectorChart, marketCapChart, performanceChart;
@@ -27,7 +27,7 @@ class PortfolioService {
             return await response.json();
         } catch (error) {
             console.error(`Error fetching ${endpoint}:`, error);
-            throw error;
+            return null;
         }
     }
 
@@ -55,7 +55,7 @@ class UIController {
         document.getElementById('totalGainLoss').textContent = formatCurrency(summary.totalGainLoss);
         document.getElementById('totalGainLossPercent').textContent = formatPercentage(summary.totalGainLossPercent);
         document.getElementById('performance').textContent = formatPercentage(summary.totalGainLossPercent);
-        document.getElementById('holdingsCount').textContent = window.portfolioData.holdings.length;
+        document.getElementById('holdingsCount').textContent = document.querySelectorAll('#holdingsTableBody tr').length;
     }
 
     static renderHoldingsTable(holdings) {
@@ -254,35 +254,46 @@ class App {
     }
 
     static async loadAllData() {
-        const [holdings, allocation, performance, summary] = await Promise.all([
-            PortfolioService.getHoldings(),
-            PortfolioService.getAllocation(),
-            PortfolioService.getPerformance(),
-            PortfolioService.getSummary()
-        ]);
-
-        // Store data globally for access
-        window.portfolioData = { holdings, allocation, performance, summary };
+        console.log('Loading portfolio data from backend...');
         
-        // Use sample data if API fails
-        if (!holdings || holdings.length === 0) {
-            console.warn('Using sample data due to API failure');
-            window.portfolioData = portfolioData;
-            holdings = portfolioData.holdings;
-            allocation = portfolioData.allocation;
-            performance = portfolioData.performance;
-            summary = portfolioData.summary;
+        // Show loading state
+        document.getElementById('loading').style.display = 'block';
+        
+        try {
+            // Fetch all data from backend
+            const [holdings, allocation, performance, summary] = await Promise.all([
+                PortfolioService.getHoldings(),
+                PortfolioService.getAllocation(),
+                PortfolioService.getPerformance(),
+                PortfolioService.getSummary()
+            ]);
+
+            if (!holdings || !allocation || !performance || !summary) {
+                throw new Error('Failed to fetch some data');
+            }
+
+            // Store data globally
+            window.portfolioData = { holdings, allocation, performance, summary };
+            
+            // Update UI
+            UIController.updateOverviewCards(summary);
+            UIController.renderHoldingsTable(holdings);
+            UIController.renderTopPerformers(summary);
+
+            // Create charts
+            ChartController.createSectorChart(allocation);
+            ChartController.createMarketCapChart(allocation);
+            ChartController.createPerformanceChart(performance);
+
+            // Hide loading state
+            document.getElementById('loading').style.display = 'none';
+            
+            console.log('All data loaded successfully from backend');
+        } catch (error) {
+            console.error('Error loading data:', error);
+            this.showError('Failed to load portfolio data. Please check your connection.');
+            document.getElementById('loading').style.display = 'none';
         }
-
-        // Update UI
-        UIController.updateOverviewCards(summary);
-        UIController.renderHoldingsTable(holdings);
-        UIController.renderTopPerformers(summary);
-
-        // Create charts
-        ChartController.createSectorChart(allocation);
-        ChartController.createMarketCapChart(allocation);
-        ChartController.createPerformanceChart(performance);
     }
 
     static setupEventListeners() {
@@ -332,83 +343,9 @@ class App {
         // Update holdings count
         document.getElementById('holdingsCount').textContent = filteredHoldings.length;
     }
-
-    static showError(message) {
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error';
-        errorDiv.textContent = message;
-        document.body.appendChild(errorDiv);
-    }
 }
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });
-
-// Sample data for development (fallback if API fails)
-const portfolioData = {
-    holdings: [
-        {
-            symbol: "RELIANCE",
-            name: "Reliance Industries Ltd",
-            quantity: 50,
-            avgPrice: 2450.00,
-            currentPrice: 2680.50,
-            sector: "Energy",
-            marketCap: "Large",
-            value: 134025.00,
-            gainLoss: 11525.00,
-            gainLossPercent: 9.4
-        },
-        {
-            symbol: "INFY",
-            name: "Infosys Limited",
-            quantity: 100,
-            avgPrice: 1800.00,
-            currentPrice: 2010.75,
-            sector: "Technology",
-            marketCap: "Large",
-            value: 201075.00,
-            gainLoss: 21075.00,
-            gainLossPercent: 11.7
-        }
-    ],
-    allocation: {
-        bySector: {
-            "Technology": { value: 201075, percentage: 60 },
-            "Energy": { value: 134025, percentage: 40 }
-        },
-        byMarketCap: {
-            "Large": { value: 335100, percentage: 100 }
-        }
-    },
-    performance: {
-        timeline: [
-            { date: "2024-01-01", portfolio: 300000, nifty50: 21000, gold: 62000 },
-            { date: "2024-03-01", portfolio: 320000, nifty50: 22100, gold: 64500 },
-            { date: "2024-06-01", portfolio: 335100, nifty50: 23500, gold: 68000 }
-    ],
-    returns: {
-        portfolio: { "1month": 2.9, "3months": 8.3, "1year": 16.7 }
-    }
-    },
-    summary: {
-        totalValue: 335100,
-        totalInvested: 300000,
-        totalGainLoss: 35100,
-        totalGainLossPercent: 11.7,
-        topPerformer: {
-            symbol: "INFY",
-            name: "Infosys Limited",
-            gainPercent: 11.7
-        },
-        worstPerformer: {
-            symbol: "RELIANCE",
-            name: "Reliance Industries Ltd",
-            gainPercent: 9.4
-        },
-        diversificationScore: 7.5,
-        riskLevel: "Moderate"
-    }
-};
