@@ -10,11 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 // Import portfolio data
-<<<<<<< HEAD
-const portfolioData = require('./backend/data/sampleData');
-=======
+// Choose the correct path based on your folder structure; update if needed
 const portfolioData = require('./data/sampleData');
->>>>>>> 6ee44f2 (Resolve vite.config.mjs conflicts)
 
 // API Routes
 app.get('/api/portfolio/holdings', (req, res) => {
@@ -54,17 +51,10 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-<<<<<<< HEAD
-// Serve static files from frontend/build
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Handle frontend routes
-=======
 // Serve static files from client/build
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Handle client routes
->>>>>>> 6ee44f2 (Resolve vite.config.mjs conflicts)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
