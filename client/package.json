@@ -12,6 +12,6 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
-    "wealthmanager-portfolio-dashboard": "file:.."
+    "wealthmanager-backend": "file:.."
   }
 }
