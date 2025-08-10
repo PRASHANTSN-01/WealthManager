@@ -257,7 +257,8 @@ class App {
         console.log('Loading portfolio data from backend...');
         
         // Show loading state
-        document.getElementById('loading').style.display = 'block';
+        const loadingElem = document.getElementById('loading');
+        if (loadingElem) loadingElem.style.display = 'block';
         
         try {
             // Fetch all data from backend
@@ -267,6 +268,11 @@ class App {
                 PortfolioService.getPerformance(),
                 PortfolioService.getSummary()
             ]);
+
+            console.log('Fetched holdings:', holdings);
+            console.log('Fetched allocation:', allocation);
+            console.log('Fetched performance:', performance);
+            console.log('Fetched summary:', summary);
 
             if (!holdings || !allocation || !performance || !summary) {
                 throw new Error('Failed to fetch some data');
@@ -286,13 +292,13 @@ class App {
             ChartController.createPerformanceChart(performance);
 
             // Hide loading state
-            document.getElementById('loading').style.display = 'none';
+            if (loadingElem) loadingElem.style.display = 'none';
             
             console.log('All data loaded successfully from backend');
         } catch (error) {
             console.error('Error loading data:', error);
             this.showError('Failed to load portfolio data. Please check your connection.');
-            document.getElementById('loading').style.display = 'none';
+            if (loadingElem) loadingElem.style.display = 'none';
         }
     }
 
